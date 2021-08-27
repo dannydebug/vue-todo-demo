@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, onMounted, PropType, ref } from 'vue';
 
 import VueButton from './Button.vue';
 import CheckmarkIcon from './CheckmarkIcon.vue';
@@ -35,6 +35,8 @@ export default defineComponent({
   name: 'TodoIdem',
   props: {
     todo: { type: Object as PropType<Todo>, required: true }
+    // Prop type is something that JS evaluates - runtime validation
+    // Casting a constructor with PropType
   },
   emits: ['doneUpdated', 'textEdited', 'deleteTodo'],
   components: {
@@ -43,6 +45,9 @@ export default defineComponent({
     DeleteIcon
   },
   setup(props, { emit }) {
+    // First optional argument of setup function - props
+    // Props are reactive and can be watched (if you use ES6 destructuring it will remove the reactivity)
+    // Context - second optional argument (exposes 3 component properties)
     const editing = ref(false);
     const editedText = ref('');
 
@@ -59,6 +64,9 @@ export default defineComponent({
       emit('textEdited', editedText.value);
       editing.value = false;
     }
+
+    // Life-cycle hooks registered inside of the setup function
+    onMounted(() => console.log(props.todo.text));
 
     return {
       editing,

@@ -14,7 +14,7 @@
           </div>
           <VueButton class="ml-2">Add</VueButton>
         </form>
-        <ul class="list">
+        <ul class="mt-2">
           <transition-group name="todo-list">
             <li v-for="todo in todos" :key="todo.id" class="list-item">
               <TodoItem
@@ -45,12 +45,14 @@ export default defineComponent({
     VueButton
   },
   setup() {
+    // Indicates that we are about to use the composition API
+    // Executes before the component is created and props are resolved
+
     // TODO: What is a ref?
     // function ref<ValueType>(value: ValueType) {
     //   return reactive({ value });
     // }
     // const hello1 = reactive({ value: 'Hello' });
-    // hello1.value;
     // const hello2 = ref('Hello');
     // hello2.value;
 
@@ -85,13 +87,15 @@ export default defineComponent({
       todos.value.sort(() => Math.random() - 0.5);
     }
 
-    watch(todos, () => {
-      console.log(`Current number of todos: ${todos.value.length}`);
+    watch(todoText, () => {
+      console.log(`Text of the todo: ${todoText.value}`);
     });
 
     watchEffect(() => {
-      console.log(`Current number of todos: ${todos.value.length}`);
+      console.log(`Text of the todo: ${todoText.value}`);
     });
+
+    // Return from a setup everything you want to expose to the template and the rest of the component
 
     return {
       todos,
@@ -110,10 +114,6 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.list {
-  @apply mt-4;
 }
 
 .title {
