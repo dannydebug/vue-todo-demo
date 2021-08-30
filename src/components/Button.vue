@@ -15,7 +15,7 @@ export default defineComponent({
       default: 'primary',
       validator: (value: string) => ['primary', 'danger'].includes(value)
     },
-    disabled: Boolean
+    disabled: { type: Boolean }
   },
   setup(props) {
     const classes = computed(() => ({
